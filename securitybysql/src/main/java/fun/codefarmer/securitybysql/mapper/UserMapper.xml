@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.codefarmer.securitybysql.mapper.UserMapper">
+    <select id="loadUserByUsername" resultType="fun.codefarmer.securitybysql.pojo.User">
+        select * from user where username = #{username}
+    </select>
+    <!-- 查看登录用户 具备什么角色-->
+    <!--逻辑：根据用户名查询user 用户，根据用户id查询user_role中 rid(角色id)，再去角色表role中查询-->
+    <select id="getUserRolesById" resultType="fun.codefarmer.securitybysql.pojo.Role">
+        select * from role where id in (select rid from user_role where uid = #{id})
+    </select>
+
+</mapper>
